@@ -237,3 +237,45 @@ button[type="submit"]:hover {
     font-size: 1.2rem;
   }
 }
+
+/* Button click animation */
+button {
+  transition: transform 0.2s ease;
+}
+
+button:active {
+  transform: scale(0.95);
+}
+
+/* Nav transition for opacity */
+nav {
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  will-change: opacity, transform;
+  position: sticky; /* keeps nav at top */
+  top: 0;
+  /* background: white;  <-- remove this line */
+  z-index: 999;
+}
+#simulation-container {
+  position: relative;
+  width: 600px;
+  height: 400px;
+  margin: 2rem auto;
+  background: linear-gradient(135deg, #a7d49b 25%, #6ebf4b 100%);
+  border: 3px solid #0a192f;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 0 12px rgba(0,0,0,0.2);
+}
+
+#robot {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  background-color: #4fd1c5;
+  border-radius: 8px;
+  top: 180px;
+  left: 280px;
+  box-shadow: 0 0 10px #38b2ac;
+  transition: top 0.1s, left 0.1s;
+}
