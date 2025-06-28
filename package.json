@@ -1,0 +1,28 @@
+{
+  "name": "cleanbot-1",
+  "version": "1.0.0",
+  "description": "CleanBot is an innovative, low-cost AI-powered robot designed to autonomously detect, collect, and dispose of litter in various outdoor environments such as parks, beaches, and sidewalks. Equipped with a high-resolution camera and powered by the NVIDIA Jetson Nano, CleanBot processes real-time visual data to accurately identify trash items while intelligently avoiding obstacles, people, pets, and other non-target objects.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Axel-Droi/CleanBot.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Axel-Droi/CleanBot/issues"
+  },
+  "homepage": "https://github.com/Axel-Droi/CleanBot#readme",
+  "dependencies": {
+    "cannon-es": "^0.20.0",
+    "three": "^0.177.0"
+  },
+  "devDependencies": {
+    "vite": "^7.0.0"
+  }
+}
