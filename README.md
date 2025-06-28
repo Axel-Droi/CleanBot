@@ -1,2 +1,5 @@
-# CleanBot
-CleanBot is a solar-powered, AI-enabled robot designed to autonomously detect, collect, and dispose of litter in public spaces like parks, beaches, and sidewalks. Using a Jetson Nano, YOLOv8, and LiDAR, it identifies trash in real time while avoiding people, pets, and obstacles to promote cleaner, smarter communities.
+CleanBot is an innovative, low-cost AI-powered robot designed to autonomously detect, collect, and dispose of litter in various outdoor environments such as parks, beaches, and sidewalks. Equipped with a high-resolution camera and powered by the NVIDIA Jetson Nano, CleanBot processes real-time visual data to accurately identify trash items while intelligently avoiding obstacles, people, pets, and other non-target objects.
+
+Utilizing advanced machine learning algorithms, CleanBot distinguishes between different types of waste and prioritizes efficient collection strategies. Its eco-friendly design incorporates solar cells for sustainable energy harvesting, enabling the robot to recharge autonomously and operate with minimal environmental impact. CleanBot’s navigation system adapts dynamically to diverse terrains and weather conditions, ensuring reliable performance across multiple settings.
+
+By combining state-of-the-art AI technology with green energy solutions, CleanBot aims to revolutionize community-driven environmental cleanup efforts, promoting cleaner, safer, and more beautiful public spaces worldwide.
