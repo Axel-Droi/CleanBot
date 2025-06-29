@@ -47,6 +47,4 @@ document.addEventListener("DOMContentLoaded", () => {
       ticking = true;
     }
   });
-  
-  
 });
