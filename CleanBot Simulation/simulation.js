@@ -1,106 +1,97 @@
-// // filepath: /cleanbot-simulation/cleanbot-simulation/src/simulation.js
-// import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.module.js';
-// import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.152.2/examples/jsm/controls/OrbitControls.js';
+import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.module.js';
+import * as CANNON from 'https://cdn.jsdelivr.net/npm/cannon-es@0.20.0/dist/cannon-es.js';
 
-// let scene, camera, renderer, robot, controls;
-// let moveForward = false, moveBackward = false, moveLeft = false, moveRight = false;
+// Scene setup
+let scene = new THREE.Scene();
+scene.background = new THREE.Color(0x87ceeb);
 
-// init();
-// animate();
+let camera = new THREE.PerspectiveCamera(75, 600/400, 0.1, 1000);
+let renderer = new THREE.WebGLRenderer();
+renderer.setSize(600, 400);
+document.getElementById('simulation-container').appendChild(renderer.domElement);
 
-// function init() {
-//   // Scene setup
-//   scene = new THREE.Scene();
-//   scene.background = new THREE.Color(0xa0d8f0); // light blue sky color
+// Lighting
+let ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+scene.add(ambientLight);
+let directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+directionalLight.position.set(5, 10, 7);
+scene.add(directionalLight);
 
-//   // Camera
-//   camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
-//   camera.position.set(0, 5, 10);
+// Cannon-es physics world
+const world = new CANNON.World({
+    gravity: new CANNON.Vec3(0, -9.82, 0)
+});
 
-//   // Renderer
-//   renderer = new THREE.WebGLRenderer({antialias: true});
-//   renderer.setSize(window.innerWidth, 600);
-//   document.getElementById('simulation-container').appendChild(renderer.domElement);
+// Ground (physics)
+const groundBody = new CANNON.Body({
+    type: CANNON.Body.STATIC,
+    shape: new CANNON.Plane(),
+    position: new CANNON.Vec3(0, 0, 0)
+});
+groundBody.quaternion.setFromEuler(-Math.PI / 2, 0, 0);
+world.addBody(groundBody);
 
-//   // Lighting
-//   const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
-//   scene.add(ambientLight);
+// Ground (visual)
+let groundGeometry = new THREE.PlaneGeometry(50, 50);
+let groundMaterial = new THREE.MeshLambertMaterial({color: 0x228B22});
+let ground = new THREE.Mesh(groundGeometry, groundMaterial);
+ground.rotation.x = -Math.PI / 2;
+scene.add(ground);
 
-//   const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
-//   directionalLight.position.set(5, 10, 7);
-//   scene.add(directionalLight);
+// Robot (cube body)
+let robotGeometry = new THREE.BoxGeometry(1, 1, 1);
+let robotMaterial = new THREE.MeshStandardMaterial({color: 0x5555ff});
+let robotMesh = new THREE.Mesh(robotGeometry, robotMaterial);
+scene.add(robotMesh);
 
-//   // Ground (park/beach simulation)
-//   const groundGeometry = new THREE.PlaneGeometry(50, 50);
-//   const groundMaterial = new THREE.MeshLambertMaterial({color: 0x228B22}); // green grass color
-//   const ground = new THREE.Mesh(groundGeometry, groundMaterial);
-//   ground.rotation.x = - Math.PI / 2;
-//   scene.add(ground);
+// Robot (physics body)
+const robotShape = new CANNON.Box(new CANNON.Vec3(0.5, 0.5, 0.5));
+const robotBody = new CANNON.Body({
+    mass: 2,
+    shape: robotShape,
+    position: new CANNON.Vec3(0, 5, 0),
+    material: new CANNON.Material({friction: 0.4, restitution: 0.1})
+});
+world.addBody(robotBody);
 
-//   // Simple robot model (a box + arm)
-//   const robotGroup = new THREE.Group();
+camera.position.set(0, 5, 10);
+camera.lookAt(0, 0, 0);
 
-//   const bodyGeometry = new THREE.BoxGeometry(1, 1, 1);
-//   const bodyMaterial = new THREE.MeshStandardMaterial({color: 0x5555ff});
-//   const body = new THREE.Mesh(bodyGeometry, bodyMaterial);
-//   body.position.y = 0.5;
-//   robotGroup.add(body);
+// Controls
+let move = {forward: false, backward: false, left: false, right: false, jump: false};
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'w') move.forward = true;
+    if (e.key === 's') move.backward = true;
+    if (e.key === 'a') move.left = true;
+    if (e.key === 'd') move.right = true;
+    if (e.key === ' ' && Math.abs(robotBody.velocity.y) < 0.05) {
+        robotBody.velocity.y = 5; // jump
+    }
+});
+document.addEventListener('keyup', (e) => {
+    if (e.key === 'w') move.forward = false;
+    if (e.key === 's') move.backward = false;
+    if (e.key === 'a') move.left = false;
+    if (e.key === 'd') move.right = false;
+});
 
-//   const armGeometry = new THREE.BoxGeometry(0.2, 0.6, 0.2);
-//   const armMaterial = new THREE.MeshStandardMaterial({color: 0xffaa00});
-//   const arm = new THREE.Mesh(armGeometry, armMaterial);
-//   arm.position.set(0.7, 1, 0);
-//   robotGroup.add(arm);
+// Animation loop
+function animate() {
+    requestAnimationFrame(animate);
 
-//   robotGroup.position.set(0, 0, 0);
-//   scene.add(robotGroup);
-//   robot = robotGroup;
+    // Apply movement force
+    let force = 10;
+    if (move.forward) robotBody.applyForce(new CANNON.Vec3(0, 0, -force), robotBody.position);
+    if (move.backward) robotBody.applyForce(new CANNON.Vec3(0, 0, force), robotBody.position);
+    if (move.left) robotBody.applyForce(new CANNON.Vec3(-force, 0, 0), robotBody.position);
+    if (move.right) robotBody.applyForce(new CANNON.Vec3(force, 0, 0), robotBody.position);
 
-//   // Controls for camera orbit
-//   controls = new OrbitControls(camera, renderer.domElement);
-//   controls.target.set(0, 0.5, 0);
-//   controls.update();
+    world.fixedStep();
 
-//   // Event listeners for movement
-//   window.addEventListener('keydown', keyDown);
-//   window.addEventListener('keyup', keyUp);
-//   window.addEventListener('resize', onWindowResize);
-// }
+    // Sync Three.js mesh with Cannon-es body
+    robotMesh.position.copy(robotBody.position);
+    robotMesh.quaternion.copy(robotBody.quaternion);
 
-// function keyDown(event) {
-//   switch(event.key.toLowerCase()) {
-//     case 'w': moveForward = true; break;
-//     case 's': moveBackward = true; break;
-//     case 'a': moveLeft = true; break;
-//     case 'd': moveRight = true; break;
-//   }
-// }
-
-// function keyUp(event) {
-//   switch(event.key.toLowerCase()) {
-//     case 'w': moveForward = false; break;
-//     case 's': moveBackward = false; break;
-//     case 'a': moveLeft = false; break;
-//     case 'd': moveRight = false; break;
-//   }
-// }
-
-// function animate() {
-//   requestAnimationFrame(animate);
-
-//   // Move robot based on keys pressed
-//   let speed = 0.1;
-
-//   if(moveForward) robot.position.z -= speed;
-//   if(moveBackward) robot.position.z += speed;
-//   if(moveLeft) robot.position.x -= speed;
-//   if(moveRight) robot.position.x += speed;
-
-//   renderer.render(scene, camera);
-// }
-  
-// function onWindowResize() {
-//   camera.aspect = window.innerWidth / 600;
-//   camera.updateProjectionMatrix();
-//   renderer.setSize(window.innerWidth, 600);
-// }
+    renderer.render(scene, camera);
+}
+animate();
