@@ -1,3 +1,4 @@
+// // filepath: /cleanbot-simulation/cleanbot-simulation/src/simulation.js
 // import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.module.js';
 // import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.152.2/examples/jsm/controls/OrbitControls.js';
 
