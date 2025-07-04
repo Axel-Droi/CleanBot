@@ -63,6 +63,7 @@ main {
 
 .hero-title {
   font-family: 'Outfit', sans-serif;
+  font-weight: 800;
   color: #0a192f;
   margin-inline: auto;
   overflow: hidden;
