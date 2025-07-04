@@ -2,7 +2,7 @@
 body {
   margin: 0;
   font-family: 'Outfit', sans-serif;
-  background: #f0f4f8;
+  background: #ebedf0;
   color: #333;
   line-height: 1.6;
 }
@@ -21,26 +21,38 @@ a:hover {
 header {
   background: #0a192f;
   color: white;
-  padding: 1.5rem 2rem;
+  padding: 2rem 1.5rem;
+  padding-left: 50px;
+  margin-left: 0.75rem;
+  margin-top: 1rem;;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 95%;
+  box-shadow: 0 12px 4px rgba(0,0,0,0.15);
+  border-radius: 30rem;
 }
 
 header h1 {
-  margin: 0;
-  font-size: 1.8rem;
+  margin: 2rem;
+  padding-right: 10px;
+  font-size: 2.5rem;
   font-weight: 800;
 }
 
 nav a {
-  margin-left: 1.5rem;
-  font-weight: 500;
+  margin-left: 1rem;
+  font-weight: 600;
   color: #ddd;
+  font-size: 20px;
+  background-color: rgb(45, 43, 43);
+  border-radius: 20px;
+  padding: 0.5rem 1rem;
 }
 
 nav a:hover {
   color: #4fd1c5;
+  background-color: #38b2ac;
 }
 
 /* ===== Main Content ===== */
@@ -67,8 +79,9 @@ main {
 .hero-title {
   font-family: 'Outfit', sans-serif;
   font-size: 2.45rem;
+  padding-left: 0rem;
   font-weight: 900;
-  text-align: center;
+  text-align: left;
   color: transparent;
   background: linear-gradient(90deg, #4fd1c5, #38b2ac);
   -webkit-background-clip: text;
@@ -135,6 +148,10 @@ main {
 
 .button:hover {
   background-color: #38b2ac;
+}
+
+.hidden {
+  text-align: left;
 }
 
 /* ===== About Section ===== */
