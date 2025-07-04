@@ -21,9 +21,7 @@ a:hover {
 header {
   background: #0a192f;
   color: white;
-  padding: 2rem 3rem;
-  padding-bottom: 2rem;
-  padding-top: 2rem;
+  padding: 1.5rem 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -31,7 +29,7 @@ header {
 
 header h1 {
   margin: 0;
-  font-size: 1rem;
+  font-size: 1.8rem;
   font-weight: 800;
 }
 
@@ -39,8 +37,6 @@ nav a {
   margin-left: 1.5rem;
   font-weight: 500;
   color: #ddd;
-  font-family: "Bahnschrift SemiBold", "Bahnschrift", sans-serif;
-  font-size: 20px;
 }
 
 nav a:hover {
@@ -60,11 +56,44 @@ main {
   padding: 4rem 0;
 }
 
-.hero h2 {
+.typewriter {
+  display: flex;
+  justify-content: center;
+}
+
+.hero-title {
+  font-family: 'Outfit', sans-serif;
+  color: #0a192f;
+  margin-inline: auto;
+  overflow: hidden;
+  /* keeps on a single line */
+  white-space: nowrap;
+  /* the cursor */
+  border-right: 1px solid;
+  animation: typing 3s steps(26) forwards, blink 1s step-end infinite;
+}
+
+
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes blink {
+  50% {
+    border-color: transparent;
+  }
+}
+
+/* .hero h2 {
   font-size: 2.5rem;
   color: #0a192f;
   margin-bottom: 3rem;
-}
+} */
 
 .hero p {
   font-size: 1.2rem;
@@ -102,7 +131,11 @@ main {
   margin-bottom: 1rem;
 }
 
-/*   */
+.about-section p {
+  font-size: 1.1rem;
+  color: #444;
+  line-height: 1.7;
+}
 
 /* ===== Team Section ===== */
 .team {
@@ -305,7 +338,7 @@ nav {
   font-size: 1.1rem;
   line-height: 1.7;
   color: #444;
-  text-align: justify;
+  text-align: center;
 }
 /* ===== Founder Name Hover Animation ===== */
 .team .member a h3 {
