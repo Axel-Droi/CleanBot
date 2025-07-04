@@ -61,45 +61,62 @@ main {
   justify-content: center;
 }
 
+
+
+/* === Updated Hero Title Styling === */
 .hero-title {
   font-family: 'Outfit', sans-serif;
-  font-weight: 800;
-  color: #0a192f;
-  margin-inline: auto;
-  overflow: hidden;
-  /* keeps on a single line */
+  font-size: 3rem;
+  font-weight: 900;
+  text-align: center;
+  color: transparent;
+  background: linear-gradient(90deg, #4fd1c5, #38b2ac);
+  -webkit-background-clip: text;
+  background-clip: text;
+  border-right: 3px solid #4fd1c5;
   white-space: nowrap;
-  display: inline-block; /* Add this line */
-  /* the cursor */
-  border-right: 1px solid;
-  animation: typing 3s steps(36) forwards, blink 1s step-end infinite;
+  overflow: hidden;
+  width: 0;
+  margin: 0 auto;
+  animation:
+    typingSmooth 4s steps(40, end) forwards,
+    blinkCaret 0.75s step-end infinite,
+    fadeInUp 1.5s ease-out;
 }
 
+/* Smooth fade-in upward */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
-@keyframes typing {
+/* Smoother typing effect */
+@keyframes typingSmooth {
   from {
     width: 0;
   }
   to {
-    width: 100%;
+    width: 39ch;
   }
 }
 
-@keyframes blink {
+/* Blinking cursor */
+@keyframes blinkCaret {
   50% {
     border-color: transparent;
   }
 }
 
-/* .hero h2 {
-  font-size: 2.5rem;
-  color: #0a192f;
-  margin-bottom: 3rem;
-} */
-
-.hero p {
-  font-size: 1.2rem;
-  color: #555;
+/* Optional: Space below typewriter text */
+.hero {
+  margin-top: 4rem;
+  margin-bottom: 2rem;
 }
 
 /* Button Style */
