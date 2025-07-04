@@ -69,9 +69,10 @@ main {
   overflow: hidden;
   /* keeps on a single line */
   white-space: nowrap;
+  display: inline-block; /* Add this line */
   /* the cursor */
   border-right: 1px solid;
-  animation: typing 3s steps(26) forwards, blink 1s step-end infinite;
+  animation: typing 3s steps(36) forwards, blink 1s step-end infinite;
 }
 
 
