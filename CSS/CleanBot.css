@@ -3,8 +3,12 @@ body {
   margin: 0;
   font-family: 'Outfit', sans-serif;
   background: #3c6944;
-  color: #333;
+  color: #e6ecc1;
   line-height: 1.6;
+}
+h1, h2, h3, h4, h5, h6,
+p, a, li, label, input, textarea, button, span, div {
+  color: #e6ecc1 !important; /* Force text color for all common tags */
 }
 
 a {
@@ -162,14 +166,14 @@ main {
 
 .about-section h2,
 .team-section h2 {
-  color: #0a192f;
+  color: #e6ecc1;
   font-size: 2rem;
   margin-bottom: 1rem;
 }
 
 .about-section p {
   font-size: 1.1rem;
-  color: #444;
+  color: #e5d68f;
   line-height: 1.7;
 }
 
@@ -203,7 +207,7 @@ main {
 footer {
   text-align: center;
   padding: 2rem;
-  background: #0a192f;
+  background: #000000;
   color: #aaa;
   margin-top: 4rem;
   font-size: 0.9rem;
@@ -216,30 +220,31 @@ footer {
   margin: 2rem auto 4rem;
   padding: 0 1rem;
   font-family: 'Outfit', sans-serif;
-  color: #222; /* dark text */
+  color: #fff; /* light text for dark background */
+  background: transparent; /* black background for the page */
 }
 
 .contact-header h2 {
   font-weight: 800;
   font-size: 2.5rem;
   margin-bottom: 0.2rem;
-  color: #0b3d91; /* deep blue */
+  color: #fff; /* white text */
   text-align: center;
 }
 
 .contact-header p {
   font-weight: 400;
   font-size: 1.15rem;
-  color: #444;
+  color: #ccc; /* lighter gray text */
   margin-bottom: 2rem;
   text-align: center;
 }
 
 .contact-form form {
-  background-color: #f5f9ff; /* very light blue */
-  border-radius: 10px;
+  background-color: #2b2b2b; /* dark form background */
+  border-radius: 50px;
   padding: 2rem 3rem;
-  box-shadow: 0 8px 18px rgba(11, 61, 145, 0.15);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.5);
 }
 
 .form-group {
@@ -251,24 +256,26 @@ footer {
 .form-group label {
   font-weight: 600;
   margin-bottom: 0.5rem;
-  color: #0b3d91;
+  color: #fff; /* white label text */
 }
 
 .form-group input,
 .form-group textarea {
   padding: 0.75rem 1rem;
-  border: 2px solid #0b3d91;
+  border: 2px solid #444; /* dark border */
   border-radius: 6px;
   font-size: 1rem;
   font-family: 'Outfit', sans-serif;
-  transition: border-color 0.3s ease;
+  background: #222; /* dark input background */
+  color: #fff; /* white input text */
+  transition: border-color 0.3s ease, background 0.3s;
 }
 
 .form-group input:focus,
 .form-group textarea:focus {
   outline: none;
-  border-color: #1766d1;
-  background-color: #e8f0fe;
+  border-color: #4fd1c5; /* accent color on focus */
+  background-color: #181818;
 }
 
 .form-group textarea {
@@ -277,21 +284,22 @@ footer {
 }
 
 button[type="submit"] {
-  background-color: #0b3d91;
-  color: white;
+  background-color: #000; /* black button */
+  color: #fff;
   font-weight: 700;
   font-size: 1.15rem;
   padding: 0.8rem 2.5rem;
-  border: none;
-  border-radius: 8px;
+  border: 2px solid #fff;
+  border-radius: 28px;
   cursor: pointer;
-  box-shadow: 0 4px 12px rgba(11, 61, 145, 0.35);
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.35);
+  transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
 }
 
 button[type="submit"]:hover {
-  background-color: #1766d1;
-  box-shadow: 0 6px 16px rgba(23, 102, 209, 0.6);
+  background-color: #fff;
+  color: #000;
+  box-shadow: 0 6px 16px rgba(255,255,255,0.1);
 }
 
 /* Responsive for smaller screens */
