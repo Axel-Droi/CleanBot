@@ -89,7 +89,7 @@ main {
   font-size: 2.45rem;
   padding-left: 0rem;
   font-weight: 900;
-  text-align: left;
+  text-align: center;
   color: transparent;
   background: linear-gradient(90deg, #caf8f4, #e6ecc1);
   -webkit-background-clip: text;
@@ -100,7 +100,7 @@ main {
   width: 0;
   margin: 0 auto;
   animation:
-    typingSmooth 4s steps(40, end) forwards,
+    typingSmooth 3s steps(40, end) forwards,
     blinkCaret 0.75s step-end infinite,
     fadeInUp 1.5s ease-out;
 }
@@ -157,6 +157,8 @@ main {
   font-size: 1.1rem;
   color: #e5d68f;
   line-height: 1.7;
+  text-align: justify;
+  align-items: justify;
   animation:
     fadeInUp 1s ease-out;
 }
@@ -207,6 +209,8 @@ footer {
   font-family: 'Outfit', sans-serif;
   color: #fff; /* light text for dark background */
   background: transparent; /* black background for the page */
+  animation:
+    fadeInUp 2s ease-out;
 }
 
 .contact-header h2 {
@@ -215,6 +219,8 @@ footer {
   margin-bottom: 0.2rem;
   color: #fff; /* white text */
   text-align: center;
+  animation:
+    fadeInUp 1s ease-out;
 }
 
 .contact-header p {
@@ -223,6 +229,8 @@ footer {
   color: #ccc; /* lighter gray text */
   margin-bottom: 2rem;
   text-align: center;
+  animation:
+    fadeInUp 1s ease-out;
 }
 
 .contact-form form {
@@ -230,6 +238,8 @@ footer {
   border-radius: 50px;
   padding: 2rem 3rem;
   box-shadow: 0 8px 18px rgba(0, 0, 0, 0.5);
+  animation:
+    fadeInUp 1s ease-out;
 }
 
 .form-group {
