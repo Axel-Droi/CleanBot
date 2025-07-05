@@ -140,6 +140,8 @@ main {
 .team-section {
   margin-bottom: 3rem;
   text-align: justify;
+  animation:
+    fadeInUp 1s ease-out;
 }
 
 .about-section h2,
@@ -147,12 +149,16 @@ main {
   color: #e6ecc1;
   font-size: 2rem;
   margin-bottom: 1rem;
+  animation:
+    fadeInUp 1s ease-out;
 }
 
 .about-section p {
   font-size: 1.1rem;
   color: #e5d68f;
   line-height: 1.7;
+  animation:
+    fadeInUp 1s ease-out;
 }
 
 /* ===== Team Section ===== */
