@@ -2,7 +2,7 @@
 body {
   margin: 0;
   font-family: 'Outfit', sans-serif;
-  background: #ebedf0;
+  background: #3c6944;
   color: #333;
   line-height: 1.6;
 }
@@ -19,7 +19,7 @@ a:hover {
 
 /* ===== Header + Navigation ===== */
 header {
-  background: #0a192f;
+  background: #141412;
   color: white;
   padding: 2rem 1.5rem;
   padding-left: 50px;
@@ -83,7 +83,7 @@ main {
   font-weight: 900;
   text-align: left;
   color: transparent;
-  background: linear-gradient(90deg, #4fd1c5, #38b2ac);
+  background: linear-gradient(90deg, #caf8f4, #e6ecc1);
   -webkit-background-clip: text;
   background-clip: text;
   border-right: 3px solid #4fd1c5;
