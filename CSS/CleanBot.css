@@ -101,35 +101,6 @@ main {
     fadeInUp 1.5s ease-out;
 }
 
-/* Smooth fade-in upward */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Smoother typing effect */
-@keyframes typingSmooth {
-  from {
-    width: 0;
-  }
-  to {
-    width: 39ch;
-  }
-}
-
-/* Blinking cursor */
-@keyframes blinkCaret {
-  50% {
-    border-color: transparent;
-  }
-}
-
 /* Optional: Space below typewriter text */
 .hero {
   margin-top: 4rem;
@@ -333,17 +304,7 @@ nav {
   /* background: white;  <-- remove this line */
   z-index: 999;
 }
-#simulation-container {
-  position: relative;
-  width: 600px;
-  height: 400px;
-  margin: 2rem auto;
-  background: linear-gradient(135deg, #a7d49b 25%, #6ebf4b 100%);
-  border: 3px solid #0a192f;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 0 12px rgba(0,0,0,0.2);
-}
+
 
 #robot {
   position: absolute;
@@ -427,9 +388,116 @@ nav {
 }
 
 /* ===== Simulation Page ===== */
+
+.simulation-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin: 2rem auto;
+}
+
+#simulation-title {
+  font-size: 3rem;
+  color: transparent;
+  margin-bottom: 1rem;
+  align-items: center;
+  background: linear-gradient(90deg, #caf8f4, #e6ecc1);
+  
+  -webkit-background-clip: text;
+  background-clip: text;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 0;
+  margin: 0 auto;
+  animation:
+    typingSmooth 3s steps(40, end) forwards,
+    blinkCaret 0.75s step-end infinite,
+    fadeInUp 1.5s ease-out;
+}
+
+#simulation-title-p {
+  font-size: 2rem;
+  color: transparent;
+  margin-bottom: 1rem;
+  align-items: center;
+  background: linear-gradient(90deg, #caf8f4, #e6ecc1);
+  border-right: 3px solid #4fd1c5;
+  -webkit-background-clip: text;
+  background-clip: text;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 0;
+  margin: 0 auto;
+  animation:
+    typingSmooth 3s steps(40, end) forwards,
+    blinkCaret 0.75s step-end infinite,
+    fadeInUp 1.5s ease-out;
+}
+
+
+#simulation-container {
+  position: relative;
+  width: 600px;
+  height: 400px;
+  margin: 2rem auto;
+  background: linear-gradient(135deg, black 25%, rgb(40, 40, 40) 100%);
+  border: 3px solid #0a192f;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 15px rgba(238, 235, 235, 0.2);
+  animation:
+    fadeInUp 2s ease-out;
+}
+
+.AI-section {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin: 2rem;
+  font-size: 3rem;
+  animation:
+    fadeInUp 2s ease-out;
+}
+
 .display-box {
-  width: 200px;
-  height: 100px;
-  background-color: lightblue;
-  border: 2px solid black;
+  width: 500px;
+  height: 500px;
+  background-color: rgb(48, 48, 48);
+  border: 2px solid rgb(43, 43, 43);
+  padding: 10rem;
+  border-radius: 2rem;
+  box-shadow: 0 10px 15px rgba(238, 235, 235, 0.2);
+  animation:
+    fadeInUp 2s ease-out;
+}
+
+/* Smooth fade-in upward */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Smoother typing effect */
+@keyframes typingSmooth {
+  from {
+    width: 0;
+  }
+  to {
+    width: 39ch;
+  }
+}
+
+/* Blinking cursor */
+@keyframes blinkCaret {
+  50% {
+    border-color: transparent;
+  }
 }
