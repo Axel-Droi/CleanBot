@@ -417,3 +417,11 @@ nav {
   transform: scale(1.03);
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
 }
+
+/* ===== Simulation Page ===== */
+.display-box {
+  width: 200px;
+  height: 100px;
+  background-color: lightblue;
+  border: 2px solid black;
+}
