@@ -2,7 +2,7 @@
 
 **An AI-Powered Autonomous Waste Detection and Community Cleanliness Intelligence Robot**
 
-> Built for the AI Community Challenge — January 2026  
+> In progress
 > Team: Shrivats Pandey · Rishabh Mathukiya
 
 ---
@@ -15,7 +15,7 @@ Urban litter is more than an eyesore. Along creek beds, downtown sidewalks, and 
 
 CleanBot is a closed-loop autonomous robot that predicts, detects, collects, and maps litter in real time. Three cooperative layers work together:
 
-- **Vision layer** — YOLOv8-Nano identifies litter type (plastic, metal, paper, bio-waste) at 30 FPS directly on the robot.
+- **Vision layer** — YOLOv11-Nano identifies litter type (plastic, metal, paper, bio-waste) directly on the robot.
 - **Navigation layer** — Q-Learning RL agent optimizes patrol routes using real-time reward signals.
 - **Intelligence layer** — A live dashboard maps waste hotspots by neighborhood so city planners can deploy resources proactively.
 
@@ -27,7 +27,7 @@ Unlike passive cameras (which only record) or traditional sweepers (which clean 
 
 | Feature | Detail |
 |---|---|
-| Real-time waste detection | YOLOv8-Nano at ~30 FPS on edge hardware |
+| Real-time waste detection | YOLOv11-Nano at ~60+ FPS on edge hardware |
 | Autonomous navigation | Q-Learning RL with obstacle avoidance via depth camera |
 | 4-class waste classification | Plastic · Metal · Paper · Bio-Waste |
 | Privacy-first design | No faces, no plates; only GPS coordinates + waste category ever leave the device |
@@ -64,7 +64,7 @@ Unlike passive cameras (which only record) or traditional sweepers (which clean 
 
 ---
 
-## Hardware Stack
+## Hardware Stack (initial phase)
 
 | Component | Specification |
 |---|---|
@@ -79,8 +79,8 @@ Unlike passive cameras (which only record) or traditional sweepers (which clean 
 
 | Layer | Technology |
 |---|---|
-| Object Detection | YOLOv8-Nano (Ultralytics) |
-| Training Framework | PyTorch |
+| Object Detection | YOLOv11-Nano (Ultralytics) |
+| Training Framework | PyTorch | (Tensor Flow)
 | Edge Optimization | NVIDIA TensorRT |
 | Navigation | Q-Learning (custom RL) |
 | Dataset | TACO + 500+ custom-labeled local images |
@@ -205,12 +205,3 @@ U.S. Environmental Protection Agency. (2023). Trash Free Waters: Impacts of Mism
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
-
----
-
-## Acknowledgements
-
-AI tools used during development (planning, debugging, documentation):
-- **Claude (Anthropic)** — System architecture planning and project outlining
-- **ChatGPT (OpenAI)** — Python debugging and data augmentation scripts
-- **Gemini (Google)** — Summarizing technical documentation and sensor research
