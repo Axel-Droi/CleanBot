@@ -1,0 +1,34 @@
+# Core ML
+torch>=2.0.0
+torchvision>=0.15.0
+ultralytics>=8.0.0
+
+# Vision / Sensors
+opencv-python>=4.8.0
+pyrealsense2>=2.54.0
+Pillow>=10.0.0
+
+# Data & augmentation
+numpy>=1.24.0
+albumentations>=1.3.0
+matplotlib>=3.7.0
+pandas>=2.0.0
+
+# Dashboard
+flask>=3.0.0
+folium>=0.15.0
+plotly>=5.18.0
+
+# Utilities
+pyyaml>=6.0
+tqdm>=4.65.0
+loguru>=0.7.0
+
+# Hardware / GPIO (Jetson Nano)
+# Uncomment on target hardware:
+# Jetson.GPIO>=2.1.0
+# smbus2>=0.4.0
+
+# Testing
+pytest>=7.4.0
+pytest-cov>=4.1.0
