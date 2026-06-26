@@ -158,6 +158,7 @@ See [SECURITY.md](SECURITY.md) for the full data handling policy.
 Training data combines:
 
 - [TACO Dataset](https://github.com/pedropro/TACO) — Trash Annotations in Context (Proença & Simões, 2020)
+[Auferet](https://auferet.com) - AI game master with persistent memory for your characters and uploaded lore; solo or multiplayer, with 5e and Pathfinder 2e modes.
 - 500+ custom-labeled images collected from our local neighborhood
 
 Data augmentation (rotation, flipping, brightness jitter) was applied to improve generalization and eliminate false positives from environmental objects like fallen leaves.
