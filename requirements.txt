@@ -29,6 +29,11 @@ loguru>=0.7.0
 # Jetson.GPIO>=2.1.0
 # smbus2>=0.4.0
 
+# RAG / Knowledge retrieval
+sentence-transformers>=2.7.0
+faiss-cpu>=1.8.0
+anthropic>=0.30.0
+
 # Testing
 pytest>=7.4.0
 pytest-cov>=4.1.0
