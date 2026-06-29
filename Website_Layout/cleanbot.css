@@ -104,34 +104,77 @@ body {
     padding: 42px 0 0;
 }
 
-.feature-card {
+.content-panel {
+    display: none;
+    animation: fadeUp 0.5s ease both;
+}
+
+.content-panel.active {
+    display: block;
+}
+
+.feature-card,
+.info-card {
     display: grid;
-    grid-template-columns: 1.1fr 0.9fr;
     gap: 24px;
     align-items: center;
     padding: 34px;
     border-radius: 28px;
     background: rgba(255, 255, 255, 0.75);
     box-shadow: 0 20px 50px rgba(15, 62, 43, 0.08);
-    animation: fadeUp 1s ease 0.2s both;
     transition: transform 0.35s ease, box-shadow 0.35s ease;
 }
 
-.feature-card:hover {
+.feature-card {
+    grid-template-columns: 1.1fr 0.9fr;
+}
+
+.info-card {
+    grid-template-columns: 1fr;
+}
+
+.feature-card:hover,
+.info-card:hover {
     transform: translateY(-6px);
     box-shadow: 0 26px 60px rgba(15, 62, 43, 0.12);
 }
 
-.feature-copy h2 {
+.feature-copy h2,
+.info-card h2 {
     margin: 0 0 12px;
     font-size: 2rem;
 }
 
-.feature-copy p {
+.feature-copy p,
+.info-card p,
+.service-card p {
     margin: 0;
     font-size: 1.05rem;
     line-height: 1.7;
     color: #345;
+}
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.service-card {
+    padding: 18px;
+    border-radius: 18px;
+    background: #f7fcf9;
+    border: 1px solid #dcefe5;
+}
+
+.service-card h3 {
+    margin: 0 0 8px;
+    color: #176b45;
+}
+
+.contact-list {
+    display: grid;
+    gap: 10px;
 }
 
 .visual-stage {
@@ -248,6 +291,10 @@ body {
     .feature-card {
         grid-template-columns: 1fr;
         padding: 24px;
+    }
+
+    .services-grid {
+        grid-template-columns: 1fr;
     }
 
     .visual-stage {

@@ -21,29 +21,72 @@
             </div>
 
             <nav class="top-buttons" aria-label="Main navigation">
-                <a href="#">Home</a>
-                <a href="#">About</a>
-                <a href="#">Services</a>
-                <a href="#">Contact</a>
+                <a href="#home" class="active" data-target="home">Home</a>
+                <a href="#about" data-target="about">About</a>
+                <a href="#services" data-target="services">Services</a>
+                <a href="#contact" data-target="contact">Contact</a>
             </nav>
         </header>
 
         <main class="content">
-            <section class="feature-card">
-                <div class="feature-copy">
-                    <h2>Welcome to Cleanbot</h2>
-                    <p>Keep streets, homes, and public spaces tidy with intelligent cleaning support and a polished digital experience.</p>
-                </div>
+            <section class="content-panel active" id="home">
+                <section class="feature-card">
+                    <div class="feature-copy">
+                        <h2>Welcome to Cleanbot</h2>
+                        <p>Keep streets, homes, and public spaces tidy with intelligent cleaning support and a polished digital experience.</p>
+                    </div>
 
-                <div class="visual-stage" aria-hidden="true">
-                    <div class="orb orb-one"></div>
-                    <div class="orb orb-two"></div>
-                    <div class="device-card">
-                        <div class="screen">
-                            <div class="line short"></div>
-                            <div class="line"></div>
-                            <div class="line medium"></div>
+                    <div class="visual-stage" aria-hidden="true">
+                        <div class="orb orb-one"></div>
+                        <div class="orb orb-two"></div>
+                        <div class="device-card">
+                            <div class="screen">
+                                <div class="line short"></div>
+                                <div class="line"></div>
+                                <div class="line medium"></div>
+                            </div>
                         </div>
+                    </div>
+                </section>
+            </section>
+
+            <section class="content-panel" id="about">
+                <div class="info-card">
+                    <h2>About Cleanbot</h2>
+                    <p>CleanBot is an innovative, low-cost AI-powered robot designed to autonomously detect, collect, and dispose of litter in various outdoor environments such as parks, beaches, and sidewalks. Equipped with a high-resolution camera and powered by the NVIDIA Jetson Nano, CleanBot processes real-time visual data to accurately identify trash items while intelligently avoiding obstacles, people, pets, and other non-target objects.</p>
+                    <p>Utilizing advanced machine learning algorithms, CleanBot distinguishes between different types of waste and prioritizes efficient collection strategies. Its eco-friendly design incorporates solar cells for sustainable energy harvesting, enabling the robot to recharge autonomously and operate with minimal environmental impact.</p>
+                    <p>CleanBot's navigation system adapts dynamically to diverse terrains and weather conditions, ensuring reliable performance across multiple settings. By combining state-of-the-art AI technology with green energy solutions, CleanBot aims to revolutionize community-driven environmental cleanup efforts, promoting cleaner, safer, and more beautiful public spaces worldwide.</p>
+                </div>
+            </section>
+
+            <section class="content-panel" id="services">
+                <div class="info-card">
+                    <h2>Our Services</h2>
+                    <div class="services-grid">
+                        <article class="service-card">
+                            <h3>Autonomous Cleanup</h3>
+                            <p>Smart route planning and waste detection for parks, campuses, and waterfronts.</p>
+                        </article>
+                        <article class="service-card">
+                            <h3>AI Sorting</h3>
+                            <p>Real-time classification of litter types to improve collection efficiency.</p>
+                        </article>
+                        <article class="service-card">
+                            <h3>Eco Charging</h3>
+                            <p>Solar-assisted recharging to extend operating time and reduce energy use.</p>
+                        </article>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content-panel" id="contact">
+                <div class="info-card">
+                    <h2>Contact Us</h2>
+                    <div class="contact-list">
+                        <p><strong>Email:</strong> -- </p>
+                        <p><strong>Phone:</strong> -- </p>
+                        <p><strong>Location:</strong> Based in Boston, MA</p>
+                        <p>We are currently building a prototype in order to showcase our technology and gain funding for the creation of the final product!</p>
                     </div>
                 </div>
             </section>
