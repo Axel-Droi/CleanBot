@@ -3,6 +3,12 @@ body {
     font-family: Arial, sans-serif;
     background: linear-gradient(135deg, #f5fbff, #e6f7ef);
     color: #123;
+    overflow-x: hidden;
+}
+
+.page-shell {
+    min-height: 100vh;
+    padding: 24px;
 }
 
 .hero {
@@ -10,19 +16,64 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 24px 36px;
-    background: white;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(16px);
+    box-shadow: 0 12px 40px rgba(15, 62, 43, 0.08);
+    border-radius: 24px;
+    animation: fadeUp 0.8s ease both;
 }
 
 .brand h1 {
     margin: 0;
-    font-size: 2rem;
+    font-size: 2.4rem;
     color: #1f8f5f;
+    letter-spacing: -0.03em;
+}
+
+.eyebrow {
+    display: inline-block;
+    margin-bottom: 8px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: #4b7b6a;
 }
 
 .brand p {
-    margin: 4px 0 0;
+    margin: 8px 0 0;
     color: #567;
+    font-size: 1rem;
+}
+
+.cta-row {
+    display: flex;
+    gap: 12px;
+    margin-top: 18px;
+}
+
+.cta-row a {
+    text-decoration: none;
+    padding: 10px 16px;
+    border-radius: 999px;
+    font-weight: 600;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+}
+
+.cta-row .primary {
+    background: #1f8f5f;
+    color: white;
+    box-shadow: 0 10px 24px rgba(31, 143, 95, 0.2);
+}
+
+.cta-row .secondary {
+    background: #eef8f2;
+    color: #176b45;
+}
+
+.cta-row a:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 28px rgba(15, 62, 43, 0.12);
 }
 
 .top-buttons {
@@ -35,35 +86,155 @@ body {
     text-decoration: none;
     padding: 10px 16px;
     border-radius: 999px;
-    background: #1f8f5f;
-    color: white;
+    background: #f4f9f6;
+    color: #234;
     font-weight: 600;
-    transition: background 0.2s ease, transform 0.2s ease;
+    transition: background 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .top-buttons a:hover,
 .top-buttons a.active {
     background: #176b45;
+    color: white;
     transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(23, 107, 69, 0.18);
 }
 
 .content {
-    padding: 60px 36px;
-    max-width: 800px;
+    padding: 42px 0 0;
 }
 
-.content h2 {
-    margin-bottom: 10px;
+.feature-card {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 24px;
+    align-items: center;
+    padding: 34px;
+    border-radius: 28px;
+    background: rgba(255, 255, 255, 0.75);
+    box-shadow: 0 20px 50px rgba(15, 62, 43, 0.08);
+    animation: fadeUp 1s ease 0.2s both;
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 26px 60px rgba(15, 62, 43, 0.12);
+}
+
+.feature-copy h2 {
+    margin: 0 0 12px;
     font-size: 2rem;
 }
 
-.content p {
-    font-size: 1.1rem;
-    line-height: 1.6;
+.feature-copy p {
+    margin: 0;
+    font-size: 1.05rem;
+    line-height: 1.7;
     color: #345;
 }
 
+.visual-stage {
+    position: relative;
+    min-height: 280px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(8px);
+    opacity: 0.6;
+    animation: float 5s ease-in-out infinite;
+}
+
+.orb-one {
+    width: 180px;
+    height: 180px;
+    background: rgba(31, 143, 95, 0.24);
+    top: 20px;
+    left: 25px;
+}
+
+.orb-two {
+    width: 120px;
+    height: 120px;
+    background: rgba(70, 171, 120, 0.2);
+    bottom: 24px;
+    right: 30px;
+    animation-delay: 1s;
+}
+
+.device-card {
+    position: relative;
+    width: 240px;
+    height: 180px;
+    border-radius: 22px;
+    background: linear-gradient(145deg, #14283b, #214058);
+    box-shadow: 0 24px 50px rgba(15, 36, 48, 0.24);
+    transform: perspective(1000px) rotateY(-10deg) rotateX(6deg);
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.device-card:hover {
+    transform: perspective(1000px) rotateY(0deg) rotateX(0deg) scale(1.03);
+    box-shadow: 0 30px 60px rgba(15, 36, 48, 0.28);
+}
+
+.screen {
+    position: absolute;
+    inset: 20px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #f4fff8, #dff7e8);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.line {
+    height: 10px;
+    border-radius: 999px;
+    background: #1f8f5f;
+    opacity: 0.9;
+}
+
+.line.short {
+    width: 55%;
+}
+
+.line.medium {
+    width: 80%;
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes float {
+    0%,
+    100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
 @media (max-width: 700px) {
+    .page-shell {
+        padding: 14px;
+    }
+
     .hero {
         flex-direction: column;
         align-items: flex-start;
@@ -72,5 +243,14 @@ body {
 
     .top-buttons {
         width: 100%;
+    }
+
+    .feature-card {
+        grid-template-columns: 1fr;
+        padding: 24px;
+    }
+
+    .visual-stage {
+        min-height: 220px;
     }
 }
