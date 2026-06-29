@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CleanBot — Live Dashboard</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #0d1117;
+      color: #e6edf3;
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* ── Sidebar ── */
+    #sidebar {
+      width: 320px;
+      min-width: 320px;
+      background: #161b22;
+      border-right: 1px solid #30363d;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    #sidebar-header {
+      padding: 18px 20px 14px;
+      border-bottom: 1px solid #30363d;
+      background: #0d1117;
+    }
+
+    .logo-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 6px;
+    }
+    .logo-icon {
+      width: 32px; height: 32px;
+      background: linear-gradient(135deg, #3DCB6C, #4299E1);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+    }
+    .logo-title { font-size: 18px; font-weight: 700; letter-spacing: -0.3px; }
+    .live-badge {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 11px; color: #3DCB6C; font-weight: 600;
+      background: rgba(61,203,108,0.12);
+      padding: 2px 8px; border-radius: 99px;
+      border: 1px solid rgba(61,203,108,0.3);
+    }
+    .live-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: #3DCB6C;
+      animation: pulse 1.5s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.3; }
+    }
+
+    /* ── Stats bar ── */
+    #stats-bar {
+      padding: 14px 20px;
+      border-bottom: 1px solid #30363d;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .stat-box {
+      background: #0d1117;
+      border: 1px solid #30363d;
+      border-radius: 8px;
+      padding: 10px 14px;
+    }
+    .stat-num  { font-size: 22px; font-weight: 700; color: #58a6ff; }
+    .stat-lbl  { font-size: 11px; color: #8b949e; margin-top: 2px; }
+
+    /* ── Chart ── */
+    #chart-section {
+      padding: 14px 20px;
+      border-bottom: 1px solid #30363d;
+    }
+    .section-title {
+      font-size: 11px; font-weight: 600; color: #8b949e;
+      text-transform: uppercase; letter-spacing: 0.8px;
+      margin-bottom: 10px;
+    }
+    #pie-chart { max-height: 160px; }
+
+    /* ── Class legend ── */
+    #legend {
+      display: flex; flex-wrap: wrap; gap: 6px;
+      padding: 0 20px 14px;
+      border-bottom: 1px solid #30363d;
+    }
+    .legend-item {
+      display: flex; align-items: center; gap: 5px;
+      font-size: 11px; color: #8b949e;
+    }
+    .legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+    /* ── Events feed ── */
+    #feed-section {
+      flex: 1;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      padding: 14px 20px 0;
+    }
+    #feed {
+      flex: 1;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding-bottom: 8px;
+    }
+    #feed::-webkit-scrollbar { width: 4px; }
+    #feed::-webkit-scrollbar-track { background: transparent; }
+    #feed::-webkit-scrollbar-thumb { background: #30363d; border-radius: 4px; }
+
+    .feed-item {
+      background: #0d1117;
+      border: 1px solid #30363d;
+      border-radius: 6px;
+      padding: 8px 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      animation: fadeIn 0.3s ease;
+    }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; } }
+
+    .feed-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .feed-cls  { font-weight: 600; flex: 1; }
+    .feed-conf { color: #8b949e; font-size: 11px; }
+    .feed-action {
+      font-size: 10px; padding: 2px 6px; border-radius: 99px;
+      font-weight: 600;
+    }
+    .feed-time { color: #8b949e; font-size: 10px; white-space: nowrap; }
+
+    /* ── RAG Q&A ── */
+    #rag-section {
+      padding: 12px 20px 16px;
+      border-top: 1px solid #30363d;
+      background: #0d1117;
+    }
+    #rag-input-row {
+      display: flex; gap: 6px; margin-top: 8px;
+    }
+    #rag-input {
+      flex: 1;
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 6px;
+      padding: 8px 10px;
+      color: #e6edf3;
+      font-size: 12px;
+      outline: none;
+    }
+    #rag-input:focus { border-color: #58a6ff; }
+    #rag-btn {
+      background: #1f6feb;
+      border: none; border-radius: 6px;
+      padding: 8px 12px;
+      color: #fff; font-size: 12px; font-weight: 600;
+      cursor: pointer;
+    }
+    #rag-btn:hover { background: #388bfd; }
+    #rag-answer {
+      margin-top: 8px;
+      font-size: 11px;
+      color: #8b949e;
+      line-height: 1.5;
+      min-height: 32px;
+      max-height: 80px;
+      overflow-y: auto;
+    }
+
+    /* ── Map ── */
+    #map {
+      flex: 1;
+      position: relative;
+    }
+    #map-overlay {
+      position: absolute;
+      top: 12px; right: 12px;
+      z-index: 1000;
+      display: flex; flex-direction: column; gap: 6px;
+    }
+    .map-btn {
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 6px;
+      padding: 6px 12px;
+      color: #e6edf3;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .map-btn:hover { background: #30363d; }
+    .map-btn.active { background: #1f6feb; border-color: #388bfd; }
+  </style>
+</head>
+<body>
+
+<!-- ── Sidebar ── -->
+<div id="sidebar">
+  <div id="sidebar-header">
+    <div class="logo-row">
+      <div class="logo-icon">🤖</div>
+      <span class="logo-title">CleanBot</span>
+      <span class="live-badge"><span class="live-dot"></span>LIVE</span>
+    </div>
+    <div style="font-size:11px;color:#8b949e;">Autonomous Waste Detection Dashboard</div>
+  </div>
+
+  <div id="stats-bar">
+    <div class="stat-box">
+      <div class="stat-num" id="total-count">—</div>
+      <div class="stat-lbl">Items Detected</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num" id="high-priority-count" style="color:#FC8181">—</div>
+      <div class="stat-lbl">High Priority</div>
+    </div>
+  </div>
+
+  <div id="chart-section">
+    <div class="section-title">Waste Breakdown</div>
+    <canvas id="pie-chart"></canvas>
+  </div>
+
+  <div id="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:#FF8C42"></div>Plastic</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#8899AA"></div>Metal</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#E8D44D"></div>Paper</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#3DCB6C"></div>Bio-waste</div>
+  </div>
+
+  <div id="feed-section">
+    <div class="section-title">Recent Detections</div>
+    <div id="feed"></div>
+  </div>
+
+  <div id="rag-section">
+    <div class="section-title">Ask the Knowledge Base</div>
+    <div id="rag-input-row">
+      <input id="rag-input" type="text" placeholder="e.g. Is styrofoam recyclable?"/>
+      <button id="rag-btn" onclick="askRag()">Ask</button>
+    </div>
+    <div id="rag-answer">Type a question about waste disposal above.</div>
+  </div>
+</div>
+
+<!-- ── Map ── -->
+<div id="map">
+  <div id="map-overlay">
+    <button class="map-btn active" id="btn-markers" onclick="toggleLayer('markers')">Markers</button>
+    <button class="map-btn" id="btn-heat"    onclick="toggleLayer('heat')">Heatmap</button>
+  </div>
+</div>
+
+<script>
+  // ── Colors ──────────────────────────────────────────────────────────────
+  const CLASS_COLOR = {
+    plastic:   "#FF8C42",
+    metal:     "#8899AA",
+    paper:     "#E8D44D",
+    bio_waste: "#3DCB6C",
+  };
+  const ACTION_COLOR = {
+    collect_recyclable: { bg: "rgba(66,153,225,0.15)", color: "#4299E1" },
+    collect_compost:    { bg: "rgba(72,187,120,0.15)", color: "#48BB78" },
+    collect_landfill:   { bg: "rgba(113,128,150,0.15)", color: "#718096" },
+    collect_hazardous:  { bg: "rgba(252,129,129,0.15)", color: "#FC8181" },
+    flag_for_pickup:    { bg: "rgba(246,173,85,0.15)",  color: "#F6AD55" },
+  };
+
+  // ── Leaflet map ──────────────────────────────────────────────────────────
+  const map = L.map("map", { zoomControl: true }).setView([37.7749, -122.4194], 13);
+  L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", {
+    attribution: "&copy; OpenStreetMap &copy; CARTO",
+    maxZoom: 19,
+  }).addTo(map);
+
+  const markerLayer = L.layerGroup().addTo(map);
+  let   heatLayer   = null;
+  let   showMarkers = true;
+  let   showHeat    = false;
+  const heatPoints  = [];
+
+  function makeMarker(ev) {
+    const color = CLASS_COLOR[ev.class_name] || "#fff";
+    const icon  = L.divIcon({
+      html: `<div style="
+        width:12px;height:12px;border-radius:50%;
+        background:${color};
+        border:2px solid rgba(255,255,255,0.6);
+        box-shadow:0 0 6px ${color}88;
+      "></div>`,
+      iconSize: [12, 12],
+      className: "",
+    });
+    const marker = L.marker([ev.lat, ev.lng], { icon });
+    marker.bindPopup(`
+      <div style="font-family:sans-serif;font-size:12px;min-width:160px">
+        <b style="color:${color}">${ev.class_name.replace("_"," ").toUpperCase()}</b><br/>
+        Confidence: ${(ev.confidence * 100).toFixed(0)}%<br/>
+        Action: <span style="color:#4299E1">${ev.action || "—"}</span><br/>
+        Bin: ${ev.bin_color || "—"}<br/>
+        Priority: ${ev.priority || "—"}<br/>
+        <small style="color:#888">${new Date(ev.timestamp * 1000).toLocaleString()}</small>
+      </div>
+    `);
+    return marker;
+  }
+
+  function addEvent(ev) {
+    markerLayer.addLayer(makeMarker(ev));
+    heatPoints.push([ev.lat, ev.lng, 0.6]);
+    if (heatLayer) {
+      heatLayer.setLatLngs(heatPoints);
+    }
+  }
+
+  function toggleLayer(which) {
+    if (which === "markers") {
+      showMarkers = !showMarkers;
+      showMarkers ? markerLayer.addTo(map) : map.removeLayer(markerLayer);
+      document.getElementById("btn-markers").classList.toggle("active", showMarkers);
+    } else {
+      showHeat = !showHeat;
+      if (showHeat) {
+        heatLayer = L.heatLayer(heatPoints, { radius: 28, blur: 20, maxZoom: 17 }).addTo(map);
+      } else if (heatLayer) {
+        map.removeLayer(heatLayer);
+        heatLayer = null;
+      }
+      document.getElementById("btn-heat").classList.toggle("active", showHeat);
+    }
+  }
+
+  // ── Chart ────────────────────────────────────────────────────────────────
+  const chartCtx = document.getElementById("pie-chart").getContext("2d");
+  const classCounts = { plastic: 0, metal: 0, paper: 0, bio_waste: 0 };
+  const chart = new Chart(chartCtx, {
+    type: "doughnut",
+    data: {
+      labels: ["Plastic", "Metal", "Paper", "Bio-waste"],
+      datasets: [{
+        data: [0, 0, 0, 0],
+        backgroundColor: ["#FF8C42", "#8899AA", "#E8D44D", "#3DCB6C"],
+        borderColor: "#161b22",
+        borderWidth: 2,
+      }],
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: true,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: ctx => ` ${ctx.label}: ${ctx.parsed} items`,
+          },
+        },
+      },
+      cutout: "60%",
+    },
+  });
+
+  function updateChart() {
+    const order = ["plastic", "metal", "paper", "bio_waste"];
+    chart.data.datasets[0].data = order.map(k => classCounts[k] || 0);
+    chart.update("none");
+  }
+
+  // ── Feed ─────────────────────────────────────────────────────────────────
+  let highPriority = 0;
+
+  function timeAgo(ts) {
+    const diff = Math.floor((Date.now() / 1000) - ts);
+    if (diff < 60)    return `${diff}s ago`;
+    if (diff < 3600)  return `${Math.floor(diff/60)}m ago`;
+    if (diff < 86400) return `${Math.floor(diff/3600)}h ago`;
+    return `${Math.floor(diff/86400)}d ago`;
+  }
+
+  function prependFeed(ev) {
+    const feed = document.getElementById("feed");
+    const color = CLASS_COLOR[ev.class_name] || "#fff";
+    const ac    = ACTION_COLOR[ev.action] || { bg: "rgba(255,255,255,0.1)", color: "#fff" };
+    const div   = document.createElement("div");
+    div.className = "feed-item";
+    div.innerHTML = `
+      <div class="feed-dot" style="background:${color}"></div>
+      <div class="feed-cls">${ev.class_name.replace("_"," ")}</div>
+      <span class="feed-action" style="background:${ac.bg};color:${ac.color}">
+        ${(ev.action||"").replace(/_/g," ")}
+      </span>
+      <div class="feed-time">${timeAgo(ev.timestamp)}</div>
+    `;
+    feed.prepend(div);
+    // keep feed at ≤ 40 items
+    while (feed.children.length > 40) feed.removeChild(feed.lastChild);
+  }
+
+  // ── Stats ─────────────────────────────────────────────────────────────────
+  function updateStats(total) {
+    document.getElementById("total-count").textContent = total;
+    document.getElementById("high-priority-count").textContent = highPriority;
+  }
+
+  // ── Initial load ──────────────────────────────────────────────────────────
+  fetch("/api/events")
+    .then(r => r.json())
+    .then(events => {
+      // events are newest-first; add oldest first so markers appear correctly
+      [...events].reverse().forEach(ev => {
+        addEvent(ev);
+        if (classCounts[ev.class_name] !== undefined) classCounts[ev.class_name]++;
+        if (ev.priority === "high" || ev.priority === "critical") highPriority++;
+      });
+      events.slice(0, 20).forEach(prependFeed);
+      updateChart();
+      updateStats(events.length);
+    });
+
+  // ── SSE live updates ──────────────────────────────────────────────────────
+  let total = 0;
+  function connectStream() {
+    const es = new EventSource("/api/stream");
+    es.onmessage = (e) => {
+      const ev = JSON.parse(e.data);
+      addEvent(ev);
+      if (classCounts[ev.class_name] !== undefined) classCounts[ev.class_name]++;
+      if (ev.priority === "high" || ev.priority === "critical") highPriority++;
+      prependFeed(ev);
+      updateChart();
+      total++;
+      updateStats(total);
+    };
+    es.onerror = () => {
+      es.close();
+      setTimeout(connectStream, 3000);  // reconnect on drop
+    };
+  }
+  // SSE starts after initial load updates total
+  fetch("/api/stats").then(r => r.json()).then(s => {
+    total = s.total;
+    updateStats(total);
+    connectStream();
+  });
+
+  // ── RAG Q&A ───────────────────────────────────────────────────────────────
+  function askRag() {
+    const q = document.getElementById("rag-input").value.trim();
+    if (!q) return;
+    const ans = document.getElementById("rag-answer");
+    ans.textContent = "Searching knowledge base…";
+    document.getElementById("rag-btn").disabled = true;
+    fetch("/api/ask", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ question: q }),
+    })
+      .then(r => r.json())
+      .then(d => { ans.textContent = d.answer; })
+      .catch(() => { ans.textContent = "Error contacting server."; })
+      .finally(() => { document.getElementById("rag-btn").disabled = false; });
+  }
+  document.getElementById("rag-input").addEventListener("keydown", e => {
+    if (e.key === "Enter") askRag();
+  });
+
+  // Leaflet heat layer CDN load (async, non-blocking)
+  const heatScript = document.createElement("script");
+  heatScript.src = "https://cdnjs.cloudflare.com/ajax/libs/leaflet.heat/0.2.0/leaflet-heat.js";
+  document.head.appendChild(heatScript);
+</script>
+</body>
+</html>

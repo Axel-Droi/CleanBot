@@ -101,9 +101,17 @@ def main():
         print(f"\nBest weights saved → {dest}")
 
     # Print final metrics
-    metrics = results.results_dict
-    map50 = metrics.get("metrics/mAP50(B)", 0)
-    map50_95 = metrics.get("metrics/mAP50-95(B)", 0)
+    try:
+        metrics  = results.results_dict
+        map50    = metrics.get("metrics/mAP50(B)", 0)
+        map50_95 = metrics.get("metrics/mAP50-95(B)", 0)
+    except AttributeError:
+        # Older ultralytics versions don't expose results_dict on the return value
+        try:
+            map50    = results.trainer.validator.metrics.box.map50
+            map50_95 = results.trainer.validator.metrics.box.map
+        except Exception:
+            map50 = map50_95 = 0.0
     print(f"\nFinal metrics:")
     print(f"  mAP@0.50      = {map50:.4f}  (target: 0.9500)")
     print(f"  mAP@0.50:0.95 = {map50_95:.4f}")

@@ -144,6 +144,9 @@ def process_taco(records: list[dict]) -> int:
 
         img_path = taco_data_dir / meta["file_name"]
         if not img_path.exists():
+            # TACO file_names often include subdirs like "batch_1/000001.jpg"
+            img_path = taco_data_dir / Path(meta["file_name"]).name
+        if not img_path.exists():
             continue
 
         W, H = meta["width"], meta["height"]

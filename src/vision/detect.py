@@ -5,6 +5,8 @@ Usage:
   python src/vision/detect.py --weights models/cleanbot.pt --source 0 --show
   python src/vision/detect.py --weights models/cleanbot.pt --source 0 --show --rag
 """
+from __future__ import annotations
+
 import argparse
 import cv2
 from src.vision.detector import TrashDetector, CLASS_COLORS
