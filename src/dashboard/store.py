@@ -30,6 +30,24 @@ def init_db() -> None:
                 priority   TEXT
             )
         """)
+        db.execute("""
+            CREATE TABLE IF NOT EXISTS users (
+                id            INTEGER PRIMARY KEY AUTOINCREMENT,
+                email         TEXT    NOT NULL UNIQUE,
+                password_hash TEXT    NOT NULL,
+                created_at    REAL    NOT NULL
+            )
+        """)
+        db.execute("""
+            CREATE TABLE IF NOT EXISTS quote_requests (
+                id         INTEGER PRIMARY KEY AUTOINCREMENT,
+                name       TEXT    NOT NULL,
+                email      TEXT    NOT NULL,
+                company    TEXT,
+                message    TEXT    NOT NULL,
+                created_at REAL    NOT NULL
+            )
+        """)
         db.commit()
 
 
@@ -81,6 +99,44 @@ def get_stats() -> dict:
             "SELECT class_name, COUNT(*) as cnt FROM events GROUP BY class_name"
         ).fetchall()
         return {"total": total, "by_class": {r["class_name"]: r["cnt"] for r in rows}}
+
+
+def create_user(email: str, password_hash: str) -> int:
+    with get_db() as db:
+        cursor = db.execute(
+            "INSERT INTO users (email, password_hash, created_at) VALUES (?, ?, ?)",
+            (email.strip().lower(), password_hash, time.time()),
+        )
+        db.commit()
+        return cursor.lastrowid
+
+
+def get_user_by_email(email: str) -> dict | None:
+    with get_db() as db:
+        row = db.execute(
+            "SELECT * FROM users WHERE email = ?",
+            (email.strip().lower(),),
+        ).fetchone()
+        return dict(row) if row else None
+
+
+def get_user_by_id(user_id: int) -> dict | None:
+    with get_db() as db:
+        row = db.execute(
+            "SELECT * FROM users WHERE id = ?",
+            (user_id,),
+        ).fetchone()
+        return dict(row) if row else None
+
+
+def save_quote_request(name: str, email: str, company: str | None, message: str) -> int:
+    with get_db() as db:
+        cursor = db.execute(
+            "INSERT INTO quote_requests (name, email, company, message, created_at) VALUES (?, ?, ?, ?, ?)",
+            (name.strip(), email.strip(), company.strip() if company else None, message.strip(), time.time()),
+        )
+        db.commit()
+        return cursor.lastrowid
 
 
 def seed_demo_data() -> None:

@@ -20,13 +20,19 @@
                 </div>
             </div>
 
-            <nav class="top-buttons" aria-label="Main navigation">
-                <a href="#home" class="active" data-target="home">Home</a>
-                <a href="#about" data-target="about">About</a>
-                <a href="#services" data-target="services">Services</a>
-                <a href="#ml-model" data-target="ml-model">Our ML Model</a>
-                <a href="#contact" data-target="contact">Contact</a>
-            </nav>
+            <div class="header-right">
+                <nav class="top-buttons" aria-label="Main navigation">
+                    <a href="#home" class="active" data-target="home">Home</a>
+                    <a href="#about" data-target="about">About</a>
+                    <a href="#services" data-target="services">Services</a>
+                    <a href="#ml-model" data-target="ml-model">Our ML Model</a>
+                    <a href="#contact" data-target="contact">Contact</a>
+                </nav>
+
+                <div class="auth-block">
+                    <button id="auth-open-btn" class="auth-button">Request a Quote</button>
+                </div>
+            </div>
         </header>
 
         <main class="content">
@@ -133,6 +139,35 @@
                 </div>
             </section>
         </main>
+    </div>
+
+    <div class="modal-overlay hidden" id="auth-modal" aria-hidden="true">
+        <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="auth-modal-title">
+            <div class="modal-header">
+                <h3 id="auth-modal-title">Request a Quote</h3>
+                <button id="auth-close-btn" class="modal-close" aria-label="Close request form">×</button>
+            </div>
+            <form id="auth-form" class="auth-form">
+                <label class="input-field">
+                    <span>Your Name</span>
+                    <input type="text" name="name" placeholder="Jane Doe" required />
+                </label>
+                <label class="input-field">
+                    <span>Email</span>
+                    <input type="email" name="email" placeholder="you@example.com" required />
+                </label>
+                <label class="input-field">
+                    <span>Company / Organization</span>
+                    <input type="text" name="company" placeholder="CleanCity Solutions" />
+                </label>
+                <label class="input-field">
+                    <span>Project Details</span>
+                    <textarea name="message" placeholder="Tell us what you need from Cleanbot..." required></textarea>
+                </label>
+                <button type="submit" class="auth-submit-btn">Send Request</button>
+                <p class="auth-message" id="auth-message"></p>
+            </form>
+        </div>
     </div>
 
     <script src="cleanbot.js"></script>

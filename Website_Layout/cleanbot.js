@@ -17,6 +17,7 @@ navButtons.forEach((button) => {
 
 window.addEventListener('load', () => {
     document.body.classList.add('loaded');
+    initQuoteRequest();
 });
 
 // ============== ML Model Webcam Detection ==============
@@ -184,3 +185,70 @@ function updateConfidence(confidence) {
     confidenceBar.style.width = percentage + '%';
     confidenceValue.textContent = percentage + '%';
 }
+
+// ============== Quote Request UI ==============
+
+const authOpenBtn = document.getElementById('auth-open-btn');
+const authCloseBtn = document.getElementById('auth-close-btn');
+const authModal = document.getElementById('auth-modal');
+const authForm = document.getElementById('auth-form');
+const authMessage = document.getElementById('auth-message');
+
+function initQuoteRequest() {
+    authOpenBtn?.addEventListener('click', openQuoteModal);
+    authCloseBtn?.addEventListener('click', closeQuoteModal);
+
+    authForm?.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const data = new FormData(authForm);
+        const payload = {
+            name: String(data.get('name') || '').trim(),
+            email: String(data.get('email') || '').trim(),
+            company: String(data.get('company') || '').trim(),
+            message: String(data.get('message') || '').trim(),
+        };
+
+        if (!payload.name || !payload.email || !payload.message) {
+            authMessage.textContent = 'Please fill in your name, email, and message.';
+            return;
+        }
+
+        await submitQuoteRequest(payload);
+    });
+}
+
+function openQuoteModal() {
+    authModal.classList.remove('hidden');
+    authModal.setAttribute('aria-hidden', 'false');
+    authForm.reset();
+    authMessage.textContent = '';
+}
+
+function closeQuoteModal() {
+    authModal.classList.add('hidden');
+    authModal.setAttribute('aria-hidden', 'true');
+}
+
+async function submitQuoteRequest(payload) {
+    try {
+        const response = await fetch('/api/quote', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+        });
+        const data = await response.json();
+        if (!response.ok || !data.ok) {
+            authMessage.textContent = data.error || 'Unable to send quote request.';
+            authMessage.classList.add('error');
+            return;
+        }
+
+        authMessage.textContent = 'Thanks! Your quote request was sent successfully.';
+        authMessage.classList.remove('error');
+        authForm.reset();
+    } catch (error) {
+        authMessage.textContent = 'Network error: could not send request.';
+        authMessage.classList.add('error');
+    }
+}
+
